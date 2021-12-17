@@ -1,0 +1,798 @@
+<html lang="en"><head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAM Health</title>
+    <base href="/">
+    <link href="css/site.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&amp;display=swap" rel="stylesheet">
+    <link href="_content/MudBlazor/MudBlazor.min.css?v=5.0.10" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mobile-drag-drop@2.3.0-rc.2/default.css">
+    <link rel="stylesheet" href="_content/Radzen.Blazor/css/default-base.css">
+    <script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script><script async="" src="https://www.googletagmanager.com/gtm.js?id=GTM-5F275K6"></script><script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-5F275K6');</script>
+</head>
+<body>
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5F275K6"
+                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <app>
+        <!--Blazor:{"sequence":0,"type":"server","descriptor":"CfDJ8PzUJKN80ddEtIs9OqTtK5wWYzXbwCC2Fld5RLcONeCkt12CwYJ8Pf9DXW5GeeE6pa3dE/n9LVl/a\u002BTqMd\u002BU4MMHI1Q3hwAYkgrRw2lyu9cokwyNphERLo0cocz7MBfyQxECF42ZSRtBYMxtoLhvaHnxAWSsLK927qF/pqgI7TDTKVfKBin6AnN9Yg8oww\u002B6z5SsbwOKkVI9g8xzskxZJKKIyEgDmZSkwZFxbjou43\u002BOlyBsKlxXWefRGWIVNZeyOPdkmzYFqbyk56uPSYfzz9gmw7GSlAPTtMQiV00vStssIrPIWp3DUULgWv86\u002BPwtf6lXwNHTO8Pp2huYFtlHlvYsCPxaSK\u002BdJ221skYNXUzP9KLbsuePCdOoMAMKrKJqRigX51BR6BH33H2cw9HleX1iW/LnlQur2v4YyPCkR\u002Bbe2Q0GAaR5wJ0euGOl1NV7E9wrbAVVRh4vzld8BuF9U63etT4BtN37lOvPsv5UUhkk"}--><!--!--><!--!--><!--!--><!--!--><!--!--><!--!--><!--!--><style>
+    .spinner-container {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        z-index: 999;
+        top: 45%;
+        left: 50%;
+    }
+</style><!--!-->
+
+<!--!--><!--!--><style>
+::-webkit-scrollbar {width: 8px;height: 8px;z-index: 1;}
+::-webkit-scrollbar-track {background: transparent;}
+::-webkit-scrollbar-thumb {background: #c4c4c4;border-radius: 1px;}
+::-webkit-scrollbar-thumb:hover {background: #a6a6a6;}
+html, body * {scrollbar-color: #c4c4c4 transparent;scrollbar-width: thin;}
+</style>
+<!--!--><style>
+    .mud-chart-serie:hover {
+        filter: url(#lighten);
+    }
+</style>
+
+<!--!--><style>
+:root{
+--mud-palette-black: #000000ff;
+--mud-palette-white: #ffffffff;
+--mud-palette-primary: #025e69ff;
+--mud-palette-primary-rgb: 2,94,105;
+--mud-palette-primary-text: #ffffffff;
+--mud-palette-primary-darken: rgb(1,63,70);
+--mud-palette-primary-lighten: rgb(3,126,140);
+--mud-palette-primary-hover: rgba(2,94,105,0.058823529411764705);
+--mud-palette-secondary: #f77f89ff;
+--mud-palette-secondary-rgb: 247,127,137;
+--mud-palette-secondary-text: #ffffffff;
+--mud-palette-secondary-darken: rgb(245,92,105);
+--mud-palette-secondary-lighten: rgb(249,159,167);
+--mud-palette-secondary-hover: rgba(247,127,137,0.058823529411764705);
+--mud-palette-tertiary: #ffffffff;
+--mud-palette-tertiary-rgb: 255,255,255;
+--mud-palette-tertiary-text: #ffffffff;
+--mud-palette-tertiary-darken: rgb(235,235,235);
+--mud-palette-tertiary-lighten: rgb(255,255,255);
+--mud-palette-tertiary-hover: rgba(255,255,255,0.058823529411764705);
+--mud-palette-info: #2196f3ff;
+--mud-palette-info-rgb: 33,150,243;
+--mud-palette-info-text: #ffffffff;
+--mud-palette-info-darken: rgb(12,128,223);
+--mud-palette-info-lighten: rgb(71,167,245);
+--mud-palette-info-hover: rgba(33,150,243,0.058823529411764705);
+--mud-palette-success: #00c853ff;
+--mud-palette-success-rgb: 0,200,83;
+--mud-palette-success-text: #ffffffff;
+--mud-palette-success-darken: rgb(0,163,68);
+--mud-palette-success-lighten: rgb(0,235,98);
+--mud-palette-success-hover: rgba(0,200,83,0.058823529411764705);
+--mud-palette-warning: #ff9800ff;
+--mud-palette-warning-rgb: 255,152,0;
+--mud-palette-warning-text: #ffffffff;
+--mud-palette-warning-darken: rgb(214,129,0);
+--mud-palette-warning-lighten: rgb(255,167,36);
+--mud-palette-warning-hover: rgba(255,152,0,0.058823529411764705);
+--mud-palette-error: #f44336ff;
+--mud-palette-error-rgb: 244,67,54;
+--mud-palette-error-text: #ffffffff;
+--mud-palette-error-darken: rgb(242,28,13);
+--mud-palette-error-lighten: rgb(246,96,85);
+--mud-palette-error-hover: rgba(244,67,54,0.058823529411764705);
+--mud-palette-dark: #ffb84eff;
+--mud-palette-dark-rgb: 255,184,78;
+--mud-palette-dark-text: #ffffffff;
+--mud-palette-dark-darken: rgb(255,169,41);
+--mud-palette-dark-lighten: rgb(255,198,112);
+--mud-palette-dark-hover: rgba(255,184,78,0.058823529411764705);
+--mud-palette-text-primary: #424242ff;
+--mud-palette-text-secondary: #00000089;
+--mud-palette-text-disabled: #00000060;
+--mud-palette-action-default: #00000089;
+--mud-palette-action-default-hover: rgba(0,0,0,0.058823529411764705);
+--mud-palette-action-disabled: #00000042;
+--mud-palette-action-disabled-background: #0000001e;
+--mud-palette-surface: #ffffffff;
+--mud-palette-background: #ffffffff;
+--mud-palette-background-grey: #f5f5f5ff;
+--mud-palette-drawer-background: #ffffffff;
+--mud-palette-drawer-text: #424242ff;
+--mud-palette-drawer-icon: #616161ff;
+--mud-palette-appbar-background: #594ae2ff;
+--mud-palette-appbar-text: #ffffffff;
+--mud-palette-lines-default: #0000001e;
+--mud-palette-lines-inputs: #bdbdbdff;
+--mud-palette-table-lines: #e0e0e0ff;
+--mud-palette-table-striped: #00000005;
+--mud-palette-table-hover: #0000000a;
+--mud-palette-divider: #e0e0e0ff;
+--mud-palette-divider-light: #000000cc;
+--mud-palette-grey-default: #9E9E9E;
+--mud-palette-grey-light: #BDBDBD;
+--mud-palette-grey-lighter: #E0E0E0;
+--mud-palette-grey-dark: #757575;
+--mud-palette-grey-darker: #616161;
+--mud-palette-overlay-dark: rgba(33,33,33,0.4980392156862745);
+--mud-palette-overlay-light: rgba(255,255,255,0.4980392156862745);
+--mud-elevation-0: none;
+--mud-elevation-1: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);
+--mud-elevation-2: 0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12);
+--mud-elevation-3: 0px 3px 3px -2px rgba(0,0,0,0.2),0px 3px 4px 0px rgba(0,0,0,0.14),0px 1px 8px 0px rgba(0,0,0,0.12);
+--mud-elevation-4: 0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12);
+--mud-elevation-5: 0px 3px 5px -1px rgba(0,0,0,0.2),0px 5px 8px 0px rgba(0,0,0,0.14),0px 1px 14px 0px rgba(0,0,0,0.12);
+--mud-elevation-6: 0px 3px 5px -1px rgba(0,0,0,0.2),0px 6px 10px 0px rgba(0,0,0,0.14),0px 1px 18px 0px rgba(0,0,0,0.12);
+--mud-elevation-7: 0px 4px 5px -2px rgba(0,0,0,0.2),0px 7px 10px 1px rgba(0,0,0,0.14),0px 2px 16px 1px rgba(0,0,0,0.12);
+--mud-elevation-8: 0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12);
+--mud-elevation-9: 0px 5px 6px -3px rgba(0,0,0,0.2),0px 9px 12px 1px rgba(0,0,0,0.14),0px 3px 16px 2px rgba(0,0,0,0.12);
+--mud-elevation-10: 0px 6px 6px -3px rgba(0,0,0,0.2),0px 10px 14px 1px rgba(0,0,0,0.14),0px 4px 18px 3px rgba(0,0,0,0.12);
+--mud-elevation-11: 0px 6px 7px -4px rgba(0,0,0,0.2),0px 11px 15px 1px rgba(0,0,0,0.14),0px 4px 20px 3px rgba(0,0,0,0.12);
+--mud-elevation-12: 0px 7px 8px -4px rgba(0,0,0,0.2),0px 12px 17px 2px rgba(0,0,0,0.14),0px 5px 22px 4px rgba(0,0,0,0.12);
+--mud-elevation-13: 0px 7px 8px -4px rgba(0,0,0,0.2),0px 13px 19px 2px rgba(0,0,0,0.14),0px 5px 24px 4px rgba(0,0,0,0.12);
+--mud-elevation-14: 0px 7px 9px -4px rgba(0,0,0,0.2),0px 14px 21px 2px rgba(0,0,0,0.14),0px 5px 26px 4px rgba(0,0,0,0.12);
+--mud-elevation-15: 0px 8px 9px -5px rgba(0,0,0,0.2),0px 15px 22px 2px rgba(0,0,0,0.14),0px 6px 28px 5px rgba(0,0,0,0.12);
+--mud-elevation-16: 0px 8px 10px -5px rgba(0,0,0,0.2),0px 16px 24px 2px rgba(0,0,0,0.14),0px 6px 30px 5px rgba(0,0,0,0.12);
+--mud-elevation-17: 0px 8px 11px -5px rgba(0,0,0,0.2),0px 17px 26px 2px rgba(0,0,0,0.14),0px 6px 32px 5px rgba(0,0,0,0.12);
+--mud-elevation-18: 0px 9px 11px -5px rgba(0,0,0,0.2),0px 18px 28px 2px rgba(0,0,0,0.14),0px 7px 34px 6px rgba(0,0,0,0.12);
+--mud-elevation-19: 0px 9px 12px -6px rgba(0,0,0,0.2),0px 19px 29px 2px rgba(0,0,0,0.14),0px 7px 36px 6px rgba(0,0,0,0.12);
+--mud-elevation-20: 0px 10px 13px -6px rgba(0,0,0,0.2),0px 20px 31px 3px rgba(0,0,0,0.14),0px 8px 38px 7px rgba(0,0,0,0.12);
+--mud-elevation-21: 0px 10px 13px -6px rgba(0,0,0,0.2),0px 21px 33px 3px rgba(0,0,0,0.14),0px 8px 40px 7px rgba(0,0,0,0.12);
+--mud-elevation-22: 0px 10px 14px -6px rgba(0,0,0,0.2),0px 22px 35px 3px rgba(0,0,0,0.14),0px 8px 42px 7px rgba(0,0,0,0.12);
+--mud-elevation-23: 0px 11px 14px -7px rgba(0,0,0,0.2),0px 23px 36px 3px rgba(0,0,0,0.14),0px 9px 44px 8px rgba(0,0,0,0.12);
+--mud-elevation-24: 0px 11px 15px -7px rgba(0,0,0,0.2),0px 24px 38px 3px rgba(0,0,0,0.14),0px 9px 46px 8px rgba(0,0,0,0.12);
+--mud-elevation-25: 0 5px 5px -3px rgba(0,0,0,.06), 0 8px 10px 1px rgba(0,0,0,.042), 0 3px 14px 2px rgba(0,0,0,.036);
+--mud-default-borderradius: 4px;
+--mud-drawer-width-left: 240px;
+--mud-drawer-width-right: 240px;
+--mud-drawer-width-mini-left: 56px;
+--mud-drawer-width-mini-right: 56px;
+--mud-appbar-height: 64px;
+--mud-typography-default-family: 'Roboto','Helvetica','Arial','sans-serif';
+--mud-typography-default-size: .875rem;
+--mud-typography-default-weight: 400;
+--mud-typography-default-lineheight: 1.43;
+--mud-typography-default-letterspacing: .01071em;
+--mud-typography-h1-family: 'Roboto','Helvetica','Arial','sans-serif';
+--mud-typography-h1-size: 6rem;
+--mud-typography-h1-weight: 300;
+--mud-typography-h1-lineheight: 1.167;
+--mud-typography-h1-letterspacing: -.01562em;
+--mud-typography-h2-family: 'Roboto','Helvetica','Arial','sans-serif';
+--mud-typography-h2-size: 3.75rem;
+--mud-typography-h2-weight: 300;
+--mud-typography-h2-lineheight: 1.2;
+--mud-typography-h2-letterspacing: -.00833em;
+--mud-typography-h3-family: 'Roboto','Helvetica','Arial','sans-serif';
+--mud-typography-h3-size: 3rem;
+--mud-typography-h3-weight: 400;
+--mud-typography-h3-lineheight: 1.167;
+--mud-typography-h3-letterspacing: 0;
+--mud-typography-h4-family: 'Roboto','Helvetica','Arial','sans-serif';
+--mud-typography-h4-size: 2.125rem;
+--mud-typography-h4-weight: 400;
+--mud-typography-h4-lineheight: 1.235;
+--mud-typography-h4-letterspacing: .00735em;
+--mud-typography-h5-family: 'Roboto','Helvetica','Arial','sans-serif';
+--mud-typography-h5-size: 1.5rem;
+--mud-typography-h5-weight: 400;
+--mud-typography-h5-lineheight: 1.334;
+--mud-typography-h5-letterspacing: 0;
+--mud-typography-h6-family: 'Roboto','Helvetica','Arial','sans-serif';
+--mud-typography-h6-size: 1.25rem;
+--mud-typography-h6-weight: 500;
+--mud-typography-h6-lineheight: 1.6;
+--mud-typography-h6-letterspacing: .0075em;
+--mud-typography-subtitle1-family: 'Roboto','Helvetica','Arial','sans-serif';
+--mud-typography-subtitle1-size: 1rem;
+--mud-typography-subtitle1-weight: 400;
+--mud-typography-subtitle1-lineheight: 1.75;
+--mud-typography-subtitle1-letterspacing: .00938em;
+--mud-typography-subtitle2-family: 'Roboto','Helvetica','Arial','sans-serif';
+--mud-typography-subtitle2-size: .875rem;
+--mud-typography-subtitle2-weight: 500;
+--mud-typography-subtitle2-lineheight: 1.57;
+--mud-typography-subtitle2-letterspacing: .00714em;
+--mud-typography-body1-family: 'Roboto','Helvetica','Arial','sans-serif';
+--mud-typography-body1-size: 1rem;
+--mud-typography-body1-weight: 400;
+--mud-typography-body1-lineheight: 1.5;
+--mud-typography-body1-letterspacing: .00938em;
+--mud-typography-body2-family: 'Roboto','Helvetica','Arial','sans-serif';
+--mud-typography-body2-size: .875rem;
+--mud-typography-body2-weight: 400;
+--mud-typography-body2-lineheight: 1.43;
+--mud-typography-body2-letterspacing: .01071em;
+--mud-typography-button-family: 'Roboto','Helvetica','Arial','sans-serif';
+--mud-typography-button-size: .875rem;
+--mud-typography-button-weight: 500;
+--mud-typography-button-lineheight: 1.75;
+--mud-typography-button-letterspacing: .02857em;
+--mud-typography-caption-family: 'Roboto','Helvetica','Arial','sans-serif';
+--mud-typography-caption-size: .75rem;
+--mud-typography-caption-weight: 400;
+--mud-typography-caption-lineheight: 1.66;
+--mud-typography-caption-letterspacing: .03333em;
+--mud-typography-overline-family: 'Roboto','Helvetica','Arial','sans-serif';
+--mud-typography-overline-size: .75rem;
+--mud-typography-overline-weight: 400;
+--mud-typography-overline-lineheight: 2.66;
+--mud-typography-overline-letterspacing: .08333em;
+--mud-zindex-drawer: 1100;
+--mud-zindex-appbar: 1200;
+--mud-zindex-dialog: 1300;
+--mud-zindex-popover: 1400;
+--mud-zindex-snackbar: 1500;
+--mud-zindex-tooltip: 1600;
+}
+</style>
+<!--!-->
+
+<!--!--><div id="mud-portal-container" data-items="0"></div><!--!-->
+<!--!--><!--!--><!--!--><!--!-->
+<!--!--><div id="mud-snackbar-container" class="mud-snackbar-location-top-right"></div><!--!-->
+<!--!--><!--!-->
+<!--!--><div class="rz-notification" style="position:fixed;z-index:1002;top:100px;float:right;right:10px;"><!--!-->
+</div><!--!-->
+<!--!--><!--!-->
+<!--!--><!--!-->
+<!--!--><!--!--><style>@media (min-width: 1024px) {
+        .container {
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            z-index: 99999 !important;
+            top: calc(50% - 150px);
+            left: 35%;
+            width: 30%;
+        }
+    }
+    @media (max-width: 1024px) {
+        .container {
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            z-index: 99999 !important;
+            top: 45%;
+            left: 10%;
+            right: 10%;
+            width: 80%;
+        }
+    }
+</style><!--!-->
+<!--!--><!--!-->
+
+<!--!--><div class="mud-layout mud-drawer-close-responsive-md-left mud-drawer-left-clipped-never" style=""><!--!--><!--!--><!--!--><header class="mud-appbar mud-appbar-fixed-top mud-elevation-0 mud-theme-primary"><!--!--><div class="mud-toolbar mud-toolbar-gutters mud-toolbar-appbar"><div class="appbarcontent"><div class="appbardata"><!--!--><!--!--><button type="button" class="mud-button-root mud-icon-button mud-icon-button-color-secondary mud-ripple mud-ripple-icon mud-icon-button-size-small" _bl_9cfdf6f1-835d-4e5f-bc67-f0915c3f465a=""><span class="mud-icon-button-label"><!--!--><svg class="mud-icon-root mud-svg-icon mud-inherit-text mud-icon-size-small" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><!--!--><path d="M0 0h24v24H0z" fill="none"></path><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"></path></svg></span></button><!--!-->
+                    <span style="color:white;font-size:13px;font-family:Oakes Grotesk;padding:2px;margin:0px;">03301742200</span></div><!--!-->
+                <div class="appbardata"><!--!--><!--!--><button type="button" class="mud-button-root mud-icon-button mud-icon-button-color-secondary mud-ripple mud-ripple-icon mud-icon-button-size-small" _bl_b39e32f6-9d70-4bba-9b08-420eb3f7186f=""><span class="mud-icon-button-label"><!--!--><svg class="mud-icon-root mud-svg-icon mud-inherit-text mud-icon-size-small" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><!--!--><path d="M0 0h24v24H0z" fill="none"></path><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"></path></svg></span></button><!--!-->
+                    <span style="color:white;font-size:13px;font-family:Oakes Grotesk;padding:2px;margin:0px;">enquiries@dam-health.com</span></div></div></div></header><!--!-->
+        <!--!--><aside class="mud-drawer mud-drawer-fixed mud-drawer-pos-left mud-drawer--closed mud-drawer--initial mud-drawer-md mud-drawer-clipped-never mud-elevation-1 mud-drawer-responsive" style="" _bl_3b07ccdf-3cd9-4bd4-a6d0-af66b6e22ddf=""><div class="mud-drawer-content" _bl_061d22de-f821-4e83-b3fd-a296b880fcc8=""><!--!--><!--!--><div class="mud-drawer-header"><!--!--><img src="/images/logoDam.png" alt="logo" href="/" class="navbar-brand">
+                <!--!--><!--!--><div class="flex-grow-1"></div><!--!-->
+                <div id="menubutton" class="btnbtn"><!--!--><!--!--><button type="button" class="mud-button-root mud-icon-button mud-icon-button-color-inherit mud-ripple mud-ripple-icon mud-icon-button-edge-end" style="margin-top:-4px" _bl_fad470d3-98e2-41e1-9a6e-d6b273c4c807=""><span class="mud-icon-button-label"><!--!--><svg class="mud-icon-root mud-svg-icon mud-inherit-text mud-icon-size-medium" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><!--!--><path d="M0 0h24v24H0V0z" fill="none"></path><path d="M3 18h13v-2H3v2zm0-5h10v-2H3v2zm0-7v2h13V6H3zm18 9.59L17.42 12 21 8.41 19.59 7l-5 5 5 5L21 15.59z"></path></svg></span></button></div></div></div></aside><!--!-->
+<!--!--><!--!--><div class="mud-main-content pl-1 pr-1 mainlayoutpadding"><!--!--><!--!--><div class="mud-paper mud-paper-outlined mt-5" style=""><div style="height:90vh;overflow:auto" id="divCertificate"><!--!-->
+
+
+
+    <link href="https://damhealth-public.s3.eu-west-2.amazonaws.com/tt-commons/style.css" rel="stylesheet" type="text/css">
+    <style>
+        .heading {
+            font-family: 'TT Commons Regular';
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            color: navy;
+        }
+
+        span {
+            font-family: 'TT Commons Bold';
+            font-size: 13px;
+        }
+
+        .strong {
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        p,
+        strong {
+            font-family: 'TT Commons Regular';
+            font-size: 13px;
+        }
+
+        hr {
+            height: 1px;
+            background-color: black;
+        }
+    </style>
+
+
+
+    <div style="margin: 15px 20px; position: relative;">
+        <div style="margin-bottom: 1rem;"> <img src="https://res.cloudinary.com/ampcome/image/upload/v1625143718/damhealth/dam-health-logo.png" style="object-fit: contain; width: 30%; position: relative; left:35%;"> </div>
+        <div style="line-height: 0.2;">
+            <p class="heading">FIT TO FLY TRAVEL CERTIFICATE</p>
+            <p class="heading">SARS-CoV-2 (COVID-19) Result Report</p>
+        </div>
+        <hr>
+        <table>
+            <tbody>
+                <tr>
+                    <td style="line-height: 0.2;width: 80%;">
+                        <div style="justify-content: end;line-height:0.5">
+                            <p><span class="strong">Patient Name:</span> TEODOR POPESCU </p>
+                            <p><span class="strong">Address:</span> 619 Denison House, London, E14 9JL ,United Kingdom</p>
+                            <p><span class="strong">Date of Birth:</span> 15/09/1994</p>
+                            <p><span class="strong">Passport Number:</span> 055900933</p>
+                        </div>
+                    </td>
+                    <td style="line-height: 0; width: 20%; text-align: center;">
+                        <div> <img src=""  style="object-fit: contain; width: 80%;"> </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <hr>
+        <div style="line-height: 0.5;">
+            <p class="heading">CLINICAL PATHOLOGY : COVID-19 TEST RESULT</p> <br>
+            <p><span class="strong">Test Type: </span>2019-nCov qPCR Assay</p>
+            <p><span class="strong">Test Date: </span> 17/12/2021</p>
+            <p><span class="strong">Test Time: </span> 10:15</p> <br>
+            <p style="text-align: center;"><span class="strong">RESULT: Negative / Non-Detected</span></p>
+        </div>
+        <hr>
+        <div style="line-height: 1;">
+            <p class="heading" style="line-height:0.5;margin-bottom: 30px;">ADMINISTERING HEALTHCARE FACILITY</p>
+            <div style="line-height: 0.2;">
+                <p><span class="strong">Test Administered by:</span> DAM Health</p>
+                <p><span class="strong">Address:</span> DAM Health Queens Dock Business Centre Norfolk Street Liverpool
+                    L1 0BG</p>
+                <p><span class="strong">Contact Number:</span> +44 330 1742 200</p>
+            </div> <span class="strong">Clinical Comment: </span>
+            <p style="text-align: justify;">Your sample result has been analysed and shows that coronavirus SARS-CoV-2,
+                the virus that causes COVID-19, was NOT DETECTED for the presence of the virus. The result of your PCR
+                swab test was made available by a trained health professional after analysis using a high performance
+                RT-PCR (Reverse Transcription-Polymerase Chain Reaction) system registered and CE approved for use in
+                the European Union. </p> <span class="strong">Patient Symptoms - Upon systemic enquiry, the patient:
+            </span>
+            <p style="text-align: justify;"> a) has not experienced or declared any recent symptoms associated with
+                COVID-19 including fever, cough, shortness of breath, muscle pain, headache, sore throat, loss of taste
+                or smell; <br> b) has had no recent close contact with another person known to have COVID-19; <br>
+                c) has not been contacted by NHS Test and Trace for the purposes of self-isolation in relation to
+                COVID-19. I can confirm that based upon the test result and information provided, the patient named
+                above is declared as FIT to fly. </p>
+        </div> <br>
+        <div style="font-size: 10px;"> <img src="https://lh3.googleusercontent.com/EePji5RSdnVgXI2i0PyJuHN_J5kH0ldOFNycrLDpKSt2YUMIx1LfyvbmKETNssjgvYtTcIrir2XAIqwBJ_ZZb7ObrFdEL9J6k86YXGN3dTlrSftM4x-ecnyj_dnC8946NaK-TYSF">
+            <br> <small>Professor Franklin Joseph MBBS, MD, FRCP. Global Medical Director, DAM Health, GMC:
+                5204695</small> </div>
+    </div>
+
+
+</div></div></div></div>
+    </app>
+
+    <div id="blazor-error-ui">
+
+            An error has occurred. This application may no longer respond until reloaded. Please click <a href="javascript:;" onclick="reloadapplication()" style="color:#fff;text-decoration:underline;margin-left:3px; margin-right:3px"> here </a> to login again
+
+
+        <a class="dismiss">🗙</a>
+
+    </div>
+    <script src="_content/MudBlazor/MudBlazor.min.js?v=5.0.10"></script>
+    <script src="_content/Radzen.Blazor/Radzen.Blazor.js"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="_framework/blazor.server.js"></script>
+    <script src="_content/Microsoft.AspNetCore.ProtectedBrowserStorage/protectedBrowserStorage.js"></script>
+    <script src="/scripts/jquery.min.js"></script>
+    <script src="/scripts/html2pdf.bundle.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mobile-drag-drop@2.3.0-rc.2/index.min.js"></script>
+    <script type="text/javascript" src="/scripts/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.2.0/js/tableexport.js"></script>
+
+    <script>
+        MobileDragDrop.polyfill({
+            // use this to make use of the scroll behaviour
+            dragImageTranslateOverride: MobileDragDrop.scrollBehaviourDragImageTranslateOverride
+        });
+        window.reloadapplication = function () {
+            location.replace(location.protocol + '//' + location.host + "/login");
+            //  location.reload(true);
+            return false;
+        }
+        var GLOBAL = {};
+        GLOBAL.DotNetReference = null;
+        window.onload = function () {
+            var GLOBAL = {};
+            GLOBAL.DotNetReference = null;
+
+        }
+
+        window.SetDotnetReference = function (pDotNetReference) {
+            GLOBAL.DotNetReference = pDotNetReference;
+        };
+
+        window.togglemenu = function () {
+
+            let element = document.getElementById('menubutton');
+            if (element) {
+                let rect = element.getBoundingClientRect();
+
+                if (Math.sign(rect.x) === 1 && window.innerWidth > 768 && document.getElementById("menubutton") && document.getElementById("menubutton").children) {
+                    document.getElementById("menubutton").children[0].click();
+                    // $('#menubutton').children[0].toggle();
+                }
+            }
+
+        }
+
+        // navigator.serviceWorker.register('service-worker.js');
+        // var stripe = window.Stripe('pk_test_51HoqO4KTy0FwZXboJdB71oa3bf07p4TVHkj34lft9Cvc4J4vq3JfR6kDLmC2bkZWmr7985aRUwAmFPtKcBZytJrM009fFUIuks');
+        var stripe = window.Stripe('pk_live_51HoqO4KTy0FwZXboyi8f0Ne2a2ZnEmdXEFFFaezWtNbrKgZRExE1te7e7In1c43dyaSUv3pqaEfKaNj085PLl4sc00OqoY2LV7');
+
+
+        window.stripeCheckout = function (token) {
+            stripe.redirectToCheckout({
+                sessionId: token
+            }).then(function (result) {
+                // up to you
+            })
+        };
+        window.viewInStripe = function (paymentIntent) {
+            window.open(`https://dashboard.stripe.com/payments/${paymentIntent}`);
+        }
+        window.getDimensions = function () {
+            return {
+                width: window.innerWidth,
+                height: window.innerHeight
+            };
+        };
+
+        window.addClickEvents = function () {
+            var elements = document.getElementsByClassName("rz-prev");
+            if (elements[0] !== null && elements[0] !== undefined) {
+                elements[0].addEventListener('click', function () { reloadSchedulerData('prev'); }, false);
+            }
+            var elements = document.getElementsByClassName("rz-next");
+            if (elements[0] !== null && elements[0] !== undefined) {
+                elements[0].addEventListener('click', function () { reloadSchedulerData('next'); }, false);
+            }
+            elements = document.getElementsByClassName('rz-scheduler-nav-views');
+
+            for (var nViewCnt = 0; nViewCnt < elements.length; nViewCnt++) {
+                elements[nViewCnt].addEventListener('click', function () {
+
+                    reloadSchedulerData();
+
+                }, false);
+            }
+            //if (elements[0] !== null && elements[0] !== undefined) {
+
+            //    children = elements[0].querySelectorAll('.rz-state-active');
+            //    if (children[0] !== null && children[0] !== undefined) {
+            //        elements[0].addEventListener('click', setTimeout(
+            //                reloadSchedulerData()
+            //        , 5000), false);
+            //    }
+            //}
+        }
+
+        window.reloadSchedulerData = function (type) {
+
+            elements = document.getElementsByClassName('rz-scheduler-nav-views');
+            if (elements[0] !== null && elements[0] !== undefined) {
+                setTimeout(function (type) {
+                    children = elements[0].querySelectorAll('.rz-state-active');
+                    if (children[0] !== null && children[0] !== undefined) {
+                        var navText = document.getElementsByClassName('rz-scheduler-nav-title')[0];
+                        GLOBAL.DotNetReference.invokeMethodAsync('ReloadSchedulerData', type, children[0].innerText, navText.innerText);
+                        try {
+                            if (children[0].innerText === "WEEK") {
+                                var startDate = navText.innerText.split(' - ')[0];
+                                var firstDate = parseInt(startDate.split('/')[1]);
+                                var parent = document.getElementsByClassName('rz-view-header')[0];
+                                var headers = parent.querySelectorAll('.rz-slot-header');
+                                for (var nHeaderCnt = 0; nHeaderCnt < headers.length; nHeaderCnt++) {
+                                    var currentText = headers[nHeaderCnt].innerText;
+                                    headers[nHeaderCnt].innerText = currentText.split(' - ')[0] + " - " + firstDate;
+                                    firstDate += 1;
+                                }
+                            }
+                        } catch (e) {
+
+                        }
+
+                    }
+                }, 500);
+
+            }
+
+            //   GLOBAL.DotNetReference.invokeMethodAsync('ReloadSchedulerData', "Hello Moto");
+        }
+
+        window.getDimensions = function () {
+            return {
+                width: window.innerWidth,
+                height: window.innerHeight
+            };
+        };
+        window.getGeoLocations = async function () {
+
+            if (!("geolocation" in navigator)) {
+                return "";
+            }
+            let pos;
+            try {
+                pos = await new Promise((resolve, reject) => {
+                    navigator.geolocation.getCurrentPosition(resolve, reject);
+                });
+            } catch (e) {
+                return "";
+            }
+
+
+            let address = {}
+            let longAddress = "";
+            var state = "";
+            var city = "";
+            var country = "";
+            var postcode = "";
+            var fromServer = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${pos.coords.latitude},${pos.coords.longitude}&key=AIzaSyD2QCMQW2OehsxBkKABcimFSgh0LP6S5WU`)
+                .then(response => response.json())
+                .then(response => {
+                    address = response["results"][0]["address_components"];
+                    //  longAddress = response["results"][0]["formatted_address"];
+                    // longAddress = response["results"][0]["formatted_address"];
+                    // console.log(address, address.slice(-1)[0].long_name);
+                })
+            for (var component in address) {
+                // for (var i in address[component]['types']) {
+                if (address[component]['types'][0] === "administrative_area_level_1") {
+                    state = address[component]['long_name'];
+                }
+                else if (address[component]['types'][0] === "locality" && address[component]['types'][1] === "political") {
+                    city = address[component]['long_name'];
+                }
+                else if (address[component]['types'][0] === "postal_code") {
+                    postcode = address[component]['long_name'];
+                }
+                else if (address[component]['types'][0] === "country") {
+                    country = address[component]['long_name'];
+                }
+                else {
+                    longAddress += address[component]['long_name'] + " , ";
+                }
+                // }
+            }
+            // console.log(respons.results, "response");
+            return {
+                address: longAddress.substring(0, longAddress.lastIndexOf(",")),
+                city: city,
+                state: state,
+                postcode: postcode,
+                country: country
+            };
+        }
+        let createArrayAtoZ = _ => {
+            return Array
+                .apply(null, { length: 26 })
+                .map((x, i) => String.fromCharCode(65 + i));
+        }
+
+        let jumptoAnchor = anchor => {
+            window.location.href = "#" + anchor;
+        }
+
+        window.createNavigationList = _ => {
+            const abcChars = createArrayAtoZ();
+            const navigationEntries = abcChars.reduce(createDivForCharElement, '');
+            $('#navazlist').append(navigationEntries);
+
+            //const lettersActive = ['A', 'C', 'G', 'M', 'X'];
+            //lettersActive.forEach(letter => {
+            //    changeItemState(letter);
+            //    addListEntries(letter);
+            //});
+        }
+
+        let changeItemState = character => {
+            $(".CharacterElement").each(function () {
+                $(this).addClass('Inactive');
+            });
+            const characterElement = $('#navazlist').find('.CharacterElement[data-filter="' + character + '"]');
+            //  $(characterElement).click(() => jumptoAnchor(character));
+            characterElement.removeClass('Inactive');
+            GLOBAL.DotNetReference.invokeMethodAsync("ReloadPatient", character);
+        }
+
+        let createDivForCharElement = (block, charToAdd) => {
+            if (charToAdd.toLowerCase() === 'a')
+                return block + "<div id='CharacterElement' class='CharacterElement' data-filter='" + charToAdd + "' onclick=changeItemState('" + charToAdd + "')>" + charToAdd + "</div>";
+
+            return block + "<div id='CharacterElement' class='CharacterElement Inactive' data-filter='" + charToAdd + "' onclick=changeItemState('" + charToAdd + "')>" + charToAdd + "</div>";
+        }
+
+        let addListEntries = letter => {
+            $('#AppComponent').append("<div class='AppElement' id='" + letter + "'>" + letter + "</div>");
+        }
+
+        window.scrollToDate = function (type) {
+            var id = type === "month" ? new Date().getDate() : new Date().getHours();
+            var tableRow = document.getElementById("tr_" + id);
+            if (tableRow) {
+                var topPos = tableRow.offsetTop;
+                topPos = topPos - 40;
+                const El = document.getElementsByClassName('mud-table-container')[0];
+                El.scrollTo({ top: topPos, behavior: 'smooth' });
+            }
+        }
+        window.scrollToControl = function (controlID) {
+            var tableRow = document.getElementById(controlID);
+
+            if (tableRow) {
+                //  var topPos = tableRow.offsetTop;
+
+
+                $("#divslots")[0].scrollIntoView();
+                //$('html, body').animate({
+                //    scrollTop: 10
+                //});
+            }
+        }
+        window.scrollToTop = function () {
+            $('html, body').animate({
+                scrollTop: 0
+            });
+        }
+        window.setChipSetMargin = function (setMargin) {
+            $(".mud-chipset").each(function () {
+                if (setMargin && window.innerWidth < 400) {
+                    this.style.setProperty('margin-left', '13%');
+                } else {
+                    this.style.setProperty('margin-left', '3%');
+                }
+            });
+        }
+        window.adjustHeight = function (isOpen) {
+            const El = document.getElementsByClassName('calendarview')[0];
+            if (El) {
+                if (isOpen) {
+                    El.style.setProperty('height', 'calc(100vh - 205px)');
+                } else {
+                    El.style.setProperty('height', 'calc(100vh - 140px)');
+                }
+            }
+        }
+        window.downloadReport = function (content) {
+            var createXLSLFormatObj = [];
+
+            var data = JSON.parse(content[0]);
+            //   createXLSLFormatObj = content;
+            createXLSLFormatObj.push(Object.keys(data[0]));
+            $.each(data, function (index, value) {
+                var innerRowData = [];
+                $.each(value, function (ind, val) {
+                    innerRowData.push(val);
+                });
+                createXLSLFormatObj.push(innerRowData);
+            });
+            /* File Name */
+            var filename = content[1] + ".xlsx";
+
+            if (typeof console !== 'undefined') console.log(new Date());
+            var wb = XLSX.utils.book_new(),
+                ws = XLSX.utils.aoa_to_sheet(createXLSLFormatObj);
+
+            /* Add worksheet to workbook */
+            XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+
+            /* Write workbook and Download */
+            if (typeof console !== 'undefined') console.log(new Date());
+            XLSX.writeFile(wb, filename);
+            if (typeof console !== 'undefined') console.log(new Date());
+        }
+        window.downloadTable = function (fileName) {
+            var table = TableExport(document.getElementsByClassName(fileName)[0], {
+                formats: ["xlsx"],
+                filename: fileName,
+                exportButtons: false,
+                sheetname: fileName
+            });
+            // var table = TableExport(document.getElementById("export-buttons-table"));
+            /* convert export data to a file for download */
+            var exportData = table.getExportData();
+            // console.log(Object.keys(exportData)[0]);
+            var xlsxData = exportData[Object.keys(exportData)[0]].xlsx; // Replace with the kind of file you want from the exportData
+            table.export2file(xlsxData.data, xlsxData.mimeType, xlsxData.filename, xlsxData.fileExtension, xlsxData.merges, xlsxData.RTL, xlsxData.sheetname);
+            table.remove();
+
+            // $(".mud-table-root").tableExport();
+        }
+        window.downloadCertificate = function (certificateContent) {
+
+            //var pdf = new jsPDF('p', 'pt', 'a4');
+            //var margins = {
+            //    top: 25,
+            //    bottom: 60,
+            //    left: 20,
+            //    width: 522
+            //};
+            //source = certificateContent;
+
+            //specialElementHandlers = {
+            //    '#editor': function (element, renderer) {
+            //        return true
+            //    }
+            //};
+            //pdf.fromHTML(
+            //    $('#divCertificate')[0],
+            //    15,
+            //    15,
+            //    {
+            //        'width': 10000,
+            //        'elementHandlers': specialElementHandlers
+            //    }
+            //    , function (dispose) {
+            //        pdf.save('Puppetboard.pdf');
+            //    }
+            //);
+            //pdf.addHTML(certificateContent).then(() => {
+            //    console.log("started");
+            //    pdf.save("test.pdf")
+            //    console.log("finished");
+            //});
+            //html2canvas($('#divCertificate')[0]).then(canvas => {
+            //    var doc = new jsPDF('p', 'px', 'a4');
+            //    const image = canvas.toDataURL('image/jpeg', 1.0);
+            //    const pageWidth = doc.internal.pageSize.width;
+            //    const pageHeight = doc.internal.pageSize.height;
+
+            //    const widthRatio = pageWidth / canvas.width;
+            //    const heightRatio = pageHeight / canvas.height;
+            //    const ratio = widthRatio > heightRatio ? heightRatio : widthRatio;
+
+            //    const canvasWidth = canvas.width * ratio;
+            //    const canvasHeight = canvas.height * ratio;
+
+            //    const marginX = (pageWidth - canvasWidth) / 2;
+            //    const marginY = (pageHeight - canvasHeight) / 2;
+
+            //    doc.addImage(image, 'JPEG', marginX, marginY, canvasWidth, canvasHeight);
+            //    doc.save();
+            //});
+            //   html2pdf($('#divCertificate')[0]);
+
+            var opt = {
+                // margin: 1,
+                filename: certificateContent[1] + '.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: {
+                    useCORS: true, ignoreElements: (node) => {
+                        return node.nodeName === 'IFRAME';
+                    }
+                },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+            html2pdf().set(opt).from(certificateContent[0]).save();
+            //   html2pdf(element, opt);
+
+        }
+
+    </script>
+
+
+<iframe name="__privateStripeMetricsController7250" frameborder="0" allowtransparency="true" scrolling="no" allow="payment *" src="https://js.stripe.com/v3/m-outer-f7902241893e7a497417843cb15dc858.html#url=https%3A%2F%2Fapp.dam-health.com%2Fverifyqrcode%3FbookingID%3Dfqqk0e%25208pOAMZkPTXdR8PQ%253D%253D%26culture%3DFGk6a9avR3kZBOwQgjhhgg%253D%253D%26fbclid%3DIwAR0TogmxQewgrKBKAvKKtFKzxWqifKfSlH3aFB58AFFViQ9Qr2QYHok0x2Y&amp;title=DAM%20Health&amp;referrer=https%3A%2F%2Fl.facebook.com%2F&amp;muid=NA&amp;sid=NA&amp;version=6&amp;preview=false" aria-hidden="true" tabindex="-1" style="border: none !important; margin: 0px !important; padding: 0px !important; width: 1px !important; min-width: 100% !important; overflow: hidden !important; display: block !important; visibility: hidden !important; position: fixed !important; height: 1px !important; pointer-events: none !important; user-select: none !important;"></iframe></body></html>
